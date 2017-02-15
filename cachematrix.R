@@ -11,27 +11,29 @@
 
 makeCacheMatrix <- function(x = matrix()) {
  # set value of solve to null
-  s <- NULL
+  # set value of inverse to null
+  inv <- NULL
   
   # set the value of the matrix 
-  # resets the value of solve to null
+  # resets the value of inverse to null
   set <- function(y) {
     x <<- y
-    s <<- NULL
+    inv <<- NULL
   }
   
   # get the value of the matrix
   get <- function() x
   
-  # set the value of the solve
-  setsolve <- function(solve_val) s <<- solve_val
+  # set the value of the inverse
+  setinverse <- function(inv_val) inv <<- inv_val
   
-  # get the value of the solve
-  getsolve <- function() s
+  # get the value of the inverse
+  getinverse <- function() s
+
   list(set = set, # gives the name 'set' to the set() function defined above 
        get = get, # gives the name 'get' to the get() function defined above
-       setsolve = setsolve, # gives the name 'setsolve' to the setsolve() function defined above
-       getsolve = getsolve) # gives the name 'getsolve' to the getsolve() function defined above
+       setinverse = setinverse, # gives the name 'setinverse' to the setinverse() function defined above
+       getinverse = getinverse) # gives the name 'getinverse' to the getinverse() function defined above
 
 }
 
@@ -44,17 +46,17 @@ makeCacheMatrix <- function(x = matrix()) {
 ## from the cache.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    ## Return a matrix that is the inverse of 'x'
 
-    s <- x$getsolve()
+    inv <- x$getinverse()
     # getting the cached value of solve
-    if(!is.null(s)) {
+    if(!is.null(inv)) {
       message("getting cached data")
-      return(s)
+      return(inv)
     }
     # getting the value of solve
     data <- x$get()
     s <- solve(data, ...)
-    x$setsolve(s)
-    s
+    x$setsolve(inv)
+    inv
 }
